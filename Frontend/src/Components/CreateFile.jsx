@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { BACKEND_URL } from "../config";
 
 const CreateFile = ({id, handleFilesCreated, folderName}) => {
   const [file, setFile] = useState(null); 
@@ -15,7 +13,7 @@ const CreateFile = ({id, handleFilesCreated, folderName}) => {
       formData.append('folderName', folderName); 
       try {
         const response = await axios.post(
-          `${BACKEND_URL}/dashboard/uploadFile`,
+          `${import.meta.env.VITE_API_URL}/dashboard/uploadFile`,
           formData, 
           {
             withCredentials: true,

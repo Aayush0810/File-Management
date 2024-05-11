@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { BACKEND_URL } from "../config";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/core/lib/styles/index.css";
@@ -17,7 +16,7 @@ const FileDetails = () => {
     const fetchFileDetails = async () => {
       try {
         const response = await axios.get(
-          `${BACKEND_URL}/dashBoard/file/${fileId}`,
+          `${import.meta.env.VITE_API_URL}/dashBoard/file/${fileId}`,
           {
             headers: {
               Authorization: `${localStorage.getItem("token")}`,

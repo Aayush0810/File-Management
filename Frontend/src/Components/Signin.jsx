@@ -1,24 +1,21 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BACKEND_URL } from "../config";
 
 export default function SignupComponent() {
   const navigate = useNavigate();
-
   const [postInputs, setPostInputs] = useState({
     email: "",
     password: "",
   });
-
   const sendRequest = async () => {
     try {
-      const response = await axios.post(`${BACKEND_URL}/user/signin`, postInputs);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/signin`, postInputs);
       const { token } = response.data;
       localStorage.setItem("token", token);
       navigate("/dashboard");
     } catch (error) {
-      alert(error.response.data);
+      alert(error.response);
     }
   };
 

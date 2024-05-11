@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BACKEND_URL } from "../config";
 import Folder from "../Components/Folder";
 import CreateFolder from "../Components/CreateFolder";
 
@@ -11,7 +10,7 @@ export const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${BACKEND_URL}/dashboard`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/dashboard`, {
           headers: {
             Authorization: localStorage.getItem("token"),
           },

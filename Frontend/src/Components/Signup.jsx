@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BACKEND_URL } from "../config";
 
 export default function SignupComponent() {
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ export default function SignupComponent() {
 
   const sendRequest = async () => {
     try {
-      const response = await axios.post(`${BACKEND_URL}/user/signup`, postInputs);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/signup`, postInputs);
       localStorage.setItem("token", response.data.token);
       navigate("/dashboard");
     } catch (err) {
@@ -83,7 +82,6 @@ function LabelledInput({ label, placeholder, onChange, type }) {
         <input
           onChange={onChange}
           type={type || "text"}
-          id="first_name"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder={placeholder}
           required

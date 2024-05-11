@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { BACKEND_URL } from "../config";
 
 const CreateFolder = ({ onFolderCreated }) => {
   const [currentPath, setCurrentPath] = useState("");
@@ -10,7 +9,7 @@ const CreateFolder = ({ onFolderCreated }) => {
     if (folderName) {
       try {
         const response = await axios.post(
-          `${BACKEND_URL}/dashBoard/uploadFolder`,
+          `${import.meta.env.VITE_API_URL}/dashBoard/uploadFolder`,
           { name: folderName, parentPath: currentPath },
           {
             headers: {

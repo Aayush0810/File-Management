@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../config";
 
 const Folder = ({ folder,  onFolderDeleted}) => {
   const [foldername, setFoldername] = useState(folder.name);
@@ -12,7 +11,7 @@ const Folder = ({ folder,  onFolderDeleted}) => {
       setFoldername(foldername);
     }
     const response = await axios.put(
-      `${BACKEND_URL}/dashBoard/folderRename`,
+      `${import.meta.env.VITE_API_URL}/dashBoard/folderRename`,
       { newName, id },
       {
         headers: {
@@ -28,7 +27,7 @@ const Folder = ({ folder,  onFolderDeleted}) => {
     const  name  = folder.name;
     try {
       await axios.delete(
-        `${BACKEND_URL}/dashBoard/delete/${id}`,
+        `${import.meta.env.VITE_API_URL}/dashBoard/delete/${id}`,
         {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,

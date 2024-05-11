@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../config";
 
 const Files = ({ file, onFileDeleted }) => {
   const [filename, setFilename] = useState(file.name);
@@ -9,7 +8,7 @@ const Files = ({ file, onFileDeleted }) => {
   const handleRename = async () => {
     const newName = prompt("Enter the new file name.");
     const response = await axios.put(
-      `${BACKEND_URL}/dashBoard/renameFile`,
+      `${import.meta.env.VITE_API_URL}/dashBoard/renameFile`,
       { newName, id },
       {
         headers: {
@@ -24,7 +23,7 @@ const Files = ({ file, onFileDeleted }) => {
     const id = file._id;
     const name = file.name;
     try {
-      await axios.delete(`${BACKEND_URL}/dashBoard/delete/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/dashBoard/delete/${id}`, {
         headers: {
           Authorization: `${localStorage.getItem("token")}`,
         },

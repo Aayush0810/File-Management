@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import CreateFile from "./CreateFile";
 import axios from "axios";
-import { BACKEND_URL } from "../config";
 import Files from "./Files";
 
 const FolderDetails = () => {
@@ -15,7 +14,7 @@ const FolderDetails = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${BACKEND_URL}/dashboard/folder/${folderId}/files`,
+          `${import.meta.env.VITE_API_URL}/dashboard/folder/${folderId}/files`,
           {
             withCredentials: true,
             headers: {
