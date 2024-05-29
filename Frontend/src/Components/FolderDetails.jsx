@@ -3,6 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import CreateFile from "./CreateFile";
 import axios from "axios";
 import Files from "./Files";
+import { Loader } from "./Loader";
 
 const FolderDetails = () => {
   const [files, setFiles] = useState([]);
@@ -31,7 +32,7 @@ const FolderDetails = () => {
     fetchData();
   }, []);
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <div className="min-h-screen flex justify-center align-middle"><Loader/></div>;
   }
   const handleFilesCreated = (newFiles) => {
     setFiles((prevFiles) => [...prevFiles, newFiles]);

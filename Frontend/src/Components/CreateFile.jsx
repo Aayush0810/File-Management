@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Loader } from "./Loader";
 
 const CreateFile = ({id, handleFilesCreated, folderName}) => {
   const [file, setFile] = useState(null); 
+  const [loading, setLoading] = useState(false); 
   const folderId = id;  
 
   const uploadFile = async () => {
@@ -11,6 +13,7 @@ const CreateFile = ({id, handleFilesCreated, folderName}) => {
       formData.append('file', file[0]); 
       formData.append('folderId', folderId); 
       formData.append('folderName', folderName); 
+      setLoading(true);
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/dashboard/uploadFile`,
@@ -24,14 +27,21 @@ const CreateFile = ({id, handleFilesCreated, folderName}) => {
           }
         );
         handleFilesCreated(response.data.file);
+        setLoading(false);
         alert("File uploaded successfully");
       } catch (err) {
+        setLoading(false);
         alert("Failed to upload file");
       }
     } else {
+      setLoading(false);
       alert("Please select a file first.");
     }
   };
+
+  if (loading) {
+    return <div className="min-h-screen flex justify-center align-middle"><Loader/></div>;
+  }
 
   return (
     <div className="flex flex-col py-3 w-full">

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Folder from "../Components/Folder";
 import CreateFolder from "../Components/CreateFolder";
+import { Loader } from "../Components/Loader";
 
 export const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -25,11 +26,11 @@ export const Dashboard = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="min-h-screen flex justify-center align-middle"><Loader/></div>;
   }
 
   const handleFolderCreated = (newFolder) => {
-    setFolders([...folders, newFolder]); // Update state to include new folder
+    setFolders([...folders, newFolder]);
   };
 
   const handleFolderDeleted = (id) => {

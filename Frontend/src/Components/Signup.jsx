@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Loader } from "./Loader";
 
 export default function SignupComponent() {
   const navigate = useNavigate();
@@ -9,16 +10,24 @@ export default function SignupComponent() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const sendRequest = async () => {
+    setLoading(true);
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/signup`, postInputs);
       localStorage.setItem("token", response.data.token);
+      setLoading(false);
       navigate("/dashboard");
     } catch (err) {
+      setLoading(false);
       alert("Error while signing up");
     }
   };
+
+  if(loading) {
+    return <div className="min-h-screen flex justify-center align-middle"><Loader /></div>;
+  }
 
   return (
     <div className="h-screen flex justify-center flex-col">

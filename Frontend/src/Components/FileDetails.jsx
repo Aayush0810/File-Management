@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
+import { Loader } from "./Loader";
 
 const FileDetails = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(true);
   const { fileId } = useParams();
-  const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
   useEffect(() => {
     const fetchFileDetails = async () => {
@@ -36,7 +35,11 @@ const FileDetails = () => {
   }, [fileId]);
 
   if (loading) {
-    return <h1>Loading file details...</h1>;
+    return (
+      <div className="min-h-screen flex justify-center align-middle">
+        <Loader />
+      </div>
+    );
   }
 
   if (!file) {
@@ -45,8 +48,10 @@ const FileDetails = () => {
   const displayName = file.name.split(".")[0];
   return (
     <div>
-      <h1 className="text-2xl font-bold flex mt-3 justify-center">{displayName}</h1>
-      {file.fileType === "pdf" && ( 
+      <h1 className="text-2xl font-bold flex mt-3 justify-center">
+        {displayName}
+      </h1>
+      {file.fileType === "pdf" && (
         <div
           style={{
             height: "600px",
@@ -60,9 +65,7 @@ const FileDetails = () => {
           <Worker
             workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}
           >
-            <Viewer
-              fileUrl={file.path}
-            />
+            <Viewer fileUrl={file.path} />
           </Worker>
         </div>
       )}

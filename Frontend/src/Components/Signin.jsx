@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Loader } from "./Loader";
 
 export default function SignupComponent() {
   const navigate = useNavigate();
@@ -8,16 +9,28 @@ export default function SignupComponent() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
   const sendRequest = async () => {
+    setLoading(true);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/signin`, postInputs);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/user/signin`,
+        postInputs
+      );
       const { token } = response.data;
       localStorage.setItem("token", token);
+      setLoading(false);
       navigate("/dashboard");
     } catch (error) {
+      setLoading(false);
       alert(error.response);
     }
   };
+
+  if(loading) {
+    return <div className="min-h-screen flex justify-center align-middle"><Loader /></div>;
+  }
+  
 
   return (
     <div className="h-screen flex justify-center flex-col">
@@ -62,7 +75,7 @@ export default function SignupComponent() {
               type="button"
               className="mt-8 w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
             >
-              Sign Up
+              Sign In
             </button>
           </div>
         </div>
